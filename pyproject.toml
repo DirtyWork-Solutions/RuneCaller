@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "runecaller"
+version = "0.1.0"
+description = "Flexible framework for event management, hooks, and dynamic plugin systems"
+authors = [
+    {name = "DirtyWork Solutions Limited", email = "runecaller@open.dirtywork.solutions"}
+]
+license = {file = "LICENSE.md"}
+readme = "README.md"
+requires-python = ">=3.13"
+
+dependencies = [
+    "setuptools~=75.8.2",
+    "pyforged~=0.2.0",
+    "bedrocked~=0.1.0"
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Topic :: System",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities"
+]
+
+
+[project.urls]
+Homepage = "https://open.dirtywork.solutions/runecaller"
+Documentation = "https://github.com/DirtyWork-Solutions/RuneCaller/docs/INDEX.md"
+Source = "https://github.com/DirtyWork-Solutions/RuneCaller"
+Issues = "https://github.com/DirtyWork-Solutions/RuneCaller/tree/main/.github/ISSUE_TEMPLATE"

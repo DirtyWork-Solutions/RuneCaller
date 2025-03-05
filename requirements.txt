@@ -1,2 +1,3 @@
 setuptools~=75.8.2
 pyforged~=0.2.0
+bedrocked~=0.1.0
