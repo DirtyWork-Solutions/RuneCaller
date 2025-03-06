@@ -1,13 +1,21 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=40.8.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "runecaller"
 version = "0.1.0"
 description = "Flexible framework for event management, hooks, and dynamic plugin systems"
+keywords=["dispatcher", "dispatch", "pydispatch", "event", "signal", "sender", "receiver", "propagate", "multi-consumer", "multi-producer", "saferef", "robustapply", "apply"]
 authors = [
-    {name = "DirtyWork Solutions Limited", email = "runecaller@open.dirtywork.solutions"}
+    {name = "DirtyWork Solutions Limited", email = "runecaller@open.dirtywork.solutions"},
+    {name = "Aidan Hogg", email = "ahogg@dirtywork.solutions"},
+    {name = "Patrick K. O'Brien" },
+    {name = "Mike C. Fletcher" }
+]
+maintainers = [
+    {name = "DirtyWork Solutions Limited", email = "runecaller@open.dirtywork.solutions"},
+
 ]
 license = {file = "LICENSE.md"}
 readme = "README.md"
@@ -39,3 +47,10 @@ Homepage = "https://open.dirtywork.solutions/runecaller"
 Documentation = "https://github.com/DirtyWork-Solutions/RuneCaller/docs/INDEX.md"
 Source = "https://github.com/DirtyWork-Solutions/RuneCaller"
 Issues = "https://github.com/DirtyWork-Solutions/RuneCaller/tree/main/.github/ISSUE_TEMPLATE"
+
+[project.optional-dependencies]
+dev = [
+    "tox",
+    "pytest",
+    "pytest-cov"
+]

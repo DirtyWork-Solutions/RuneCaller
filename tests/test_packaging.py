@@ -9,4 +9,4 @@ class PackagingTest(unittest.TestCase):
         else:
             version = metadata.version("pydispatcher")
             version = [int(x) for x in version.split('.')]
-            assert version >= [2,0,7], "Our installed version did not pick up configured attribute pydispatch.__version__"
+            assert version >= [2,0,7], "Our installed version did not pick up configured attribute runecaller.__version__"

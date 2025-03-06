@@ -1,4 +1,4 @@
-from pydispatch.saferef import *
+from runecaller.events.saferef import *
 
 import unittest
 class T1( object):

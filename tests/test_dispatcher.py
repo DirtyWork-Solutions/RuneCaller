@@ -1,5 +1,5 @@
-from pydispatch.dispatcher import *
-from pydispatch import dispatcher, robust
+from runecaller.events.dispatcher import *
+from runecaller.events import dispatcher, robust
 
 import unittest
 def x(a):
