@@ -1,5 +1,5 @@
-from pydispatch.robustapply import *
-from pydispatch import robustapply
+from runecaller.events.robustapply import *
+from runecaller.events import robustapply
 
 import unittest
 
