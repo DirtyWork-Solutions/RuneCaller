@@ -3,7 +3,6 @@ from runecaller.events.dispatch import dispatch
 from runecaller.events.subscribe import subscribe, unsubscribe
 from runecaller.events.observe import log_event
 
-
 class TestPlugin(Extension):
     def __init__(self):
         # Initialize with a name, version, and an empty dependency list.
@@ -34,11 +33,13 @@ class TestPlugin(Extension):
         # Dispatch an event to notify that execution is happening.
         dispatch("plugin.test", {"action": "execute", "args": args, "kwargs": kwargs})
 
-    def handle_test_event(self, event):
-        # A simple listener that logs the received event.
-        print(f"[TestPlugin] Received event: {event.name} with payload: {event.payload}")
-        # Optionally, you can call a helper observer function:
-        log_event(event)
+    def on_event(self, event):
+        print("Extension handling event with context:", event.context)
+        # For example, modify the context for downstream processing
+        event.context["handled_by_extension"] = "ExtensionName"
+
+    def handle_test_event(self, other):
+        print(other)
 
 
 # For standalone testing, run the following block.
