@@ -139,3 +139,101 @@ def event_stream() -> Generator['Event', None, None]:
         from .event import Event
         yield Event(name=name, payload=payload, metadata=metadata)
     conn.close()
+
+
+import time
+import logging
+from collections import deque
+
+logger = logging.getLogger(__name__)
+
+
+# -------------------------------------------------
+# Dynamic Load Adaptation
+# -------------------------------------------------
+class LoadMonitor:
+    def __init__(self, window_seconds=5, max_events=10):
+        self.window_seconds = window_seconds
+        self.max_events = max_events
+        self.events = deque()  # Stores timestamps of recent events
+
+    def record_event(self):
+        now = time.time()
+        self.events.append(now)
+        # Remove events older than the window period
+        while self.events and now - self.events[0] > self.window_seconds:
+            self.events.popleft()
+
+    def is_high_load(self) -> bool:
+        return len(self.events) >= self.max_events
+
+
+# Global load monitor instance (configurable)
+global_load_monitor = LoadMonitor(window_seconds=5, max_events=10)
+
+
+# -------------------------------------------------
+# Circuit Breaker for Faulty Events
+# -------------------------------------------------
+class CircuitBreaker:
+    def __init__(self, failure_threshold=3, recovery_time=10):
+        self.failure_threshold = failure_threshold
+        self.recovery_time = recovery_time  # in seconds
+        self.failures = {}  # event_name -> (failure_count, last_failure_time)
+
+    def allow_event(self, event_name: str) -> bool:
+        if event_name not in self.failures:
+            return True
+        failure_count, last_failure_time = self.failures[event_name]
+        if failure_count < self.failure_threshold:
+            return True
+        # Check if recovery time has passed
+        if time.time() - last_failure_time > self.recovery_time:
+            self.reset(event_name)
+            return True
+        return False
+
+    def record_failure(self, event_name: str):
+        now = time.time()
+        if event_name in self.failures:
+            failure_count, _ = self.failures[event_name]
+            self.failures[event_name] = (failure_count + 1, now)
+        else:
+            self.failures[event_name] = (1, now)
+        logger.debug(f"CircuitBreaker: Recorded failure for {event_name}: {self.failures[event_name]}")
+
+    def reset(self, event_name: str):
+        if event_name in self.failures:
+            logger.debug(f"CircuitBreaker: Resetting failures for {event_name}")
+            del self.failures[event_name]
+
+
+# Global circuit breaker instance
+global_circuit_breaker = CircuitBreaker(failure_threshold=3, recovery_time=10)
+
+
+# -------------------------------------------------
+# Fine-Grained Logging & Alerting
+# -------------------------------------------------
+class LoggingConfig:
+    def __init__(self):
+        self.event_levels = {}  # event_name -> logging level
+
+    def set_level(self, event_name: str, level):
+        self.event_levels[event_name] = level
+
+    def get_level(self, event_name: str):
+        return self.event_levels.get(event_name, logging.INFO)
+
+
+# Global logging configuration instance
+global_logging_config = LoggingConfig()
+
+
+def alert_event(event_name: str, message: str):
+    """
+    Stub for an alerting mechanism.
+    For now, this function logs a critical alert.
+    It can be extended to send notifications (email, SMS, etc.).
+    """
+    logger.critical(f"ALERT for event '{event_name}': {message}")
