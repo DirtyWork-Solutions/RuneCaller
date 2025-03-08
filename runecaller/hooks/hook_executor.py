@@ -66,3 +66,17 @@ async def async_hook_wrapper(hook, *args, **kwargs):
         return result
     except Exception as e:
         logger.exception(f"Error in async hook {hook}: {e}")
+
+
+import concurrent.futures
+
+executor = concurrent.futures.ThreadPoolExecutor(max_workers=10)
+
+def execute_hook_isolated(hook, *args, **kwargs):
+    return executor.submit(hook.execute, *args, **kwargs)
+
+import logging
+logger = logging.getLogger("hook_audit")
+
+def audit_hook_execution(hook_name, inputs, outputs, exec_time):
+    logger.info(f"Hook {hook_name} executed in {exec_time:.4f}s; inputs: {inputs}, outputs: {outputs}")
