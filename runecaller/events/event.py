@@ -18,6 +18,7 @@ class Event:
         self.metadata.setdefault("timestamp", datetime.datetime.now().isoformat())
         # Ensure each event has a correlation id for tracing.
         self.metadata.setdefault("correlation_id", str(uuid.uuid4()))
+        self.metadata.setdefault("")
         # Unified context that can be passed along and updated.
         self.context = context or {}
         # Optionally, initialize context with metadata if needed.
