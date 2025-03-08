@@ -1,0 +1,18 @@
+name: "hello_world"
+type: "plugin"  # plugin, extension, adapter, overlay, service
+version: "0.1.0"
+author: "DirtyWork Solutions"
+description: "An example plugin."
+requires:
+    python: ">=3.12"
+    plugins: ["auth_plugin>=2.0"]
+    capabilities: ["logging", "audit"]
+provides:
+    hooks: ["pre_request", "post_request"]
+    events: ["audit_log"]
+capabilities: ["audit", "logging"]
+dependencies:
+    modifications: ["core_event_manager>=1.0"]
+    services: ["auth_service"]
+self_extensible: true  # Can it modify the system itself?
+trusted: false  # Security marker
