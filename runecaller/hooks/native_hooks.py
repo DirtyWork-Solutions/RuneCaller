@@ -1,15 +1,7 @@
-from abc import ABC, abstractmethod
 from typing import Callable
 
+from runecaller.__bases__ import BaseHook
 
-class BaseHook(ABC):
-    """
-    Abstract base class for hooks.
-    """
-    @abstractmethod
-    def execute(self, *args, **kwargs):
-        """Implement hook logic here."""
-        pass
 
 # Example default hook
 class DefaultPreHook(BaseHook):
