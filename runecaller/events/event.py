@@ -1,7 +1,73 @@
 import datetime
 import uuid
-from typing import Any, Dict
+from typing import Any, Dict, Optional, List
 import contextvars
+
+EVENT_GROUPS = {
+    "auth_events": ["user_login", "user_logout", "password_reset"],
+    "system_health": ["system_start", "system_shutdown", "error_occurred"],
+    "data_changes": ["record_created", "record_updated", "record_deleted"],
+}
+
+class EventMetadata:
+    def __init__(
+        self,
+        event_name: str,
+        event_type: str,
+        tags: Optional[List[str]] = None,
+        group: Optional[str] = None,
+        priority: int = 1,
+        timestamp: Optional[datetime] = None,
+        source: Optional[str] = None,
+        initiator: Optional[str] = None,
+        payload_schema: Optional[Dict] = None,
+        execution_mode: str = "sync",  # Options: sync, async, deferred
+        retry_policy: Optional[Dict] = None,
+        persisted: bool = False,
+        expiration: Optional[datetime] = None,
+        dependencies: Optional[List[str]] = None,
+        allowed_handlers: Optional[List[str]] = None,
+        confidentiality: str = "public",  # Options: public, private, classified
+        audit_required: bool = False,
+        access_roles: Optional[List[str]] = None,
+        signature: Optional[str] = None,
+        trace_id: Optional[str] = None,
+        execution_time: Optional[float] = None,
+        resource_usage: Optional[Dict] = None,
+        error_count: int = 0,
+        status: str = "pending",  # pending, processing, completed, failed
+        last_attempt: Optional[datetime] = None,
+    ):
+        self.event_name = event_name
+        self.event_type = event_type
+        self.tags = tags or []
+        self.group = group
+        self.priority = priority
+        self.timestamp = timestamp or datetime.datetime.now()
+        self.source = source
+        self.initiator = initiator
+        self.payload_schema = payload_schema
+        self.execution_mode = execution_mode
+        self.retry_policy = retry_policy or {"max_attempts": 3, "backoff_time": 2}  # Default retry config
+        self.persisted = persisted
+        self.expiration = expiration
+        self.dependencies = dependencies or []
+        self.allowed_handlers = allowed_handlers
+        self.confidentiality = confidentiality
+        self.audit_required = audit_required
+        self.access_roles = access_roles
+        self.signature = signature
+        self.trace_id = trace_id
+        self.execution_time = execution_time
+        self.resource_usage = resource_usage or {}
+        self.error_count = error_count
+        self.status = status
+        self.last_attempt = last_attempt
+
+    def __repr__(self):
+        return f"<EventMetadata {self.event_name} [{self.event_type}] priority={self.priority}>"
+
+
 
 # Context variable for propagating event context.
 current_event_context = contextvars.ContextVar("current_event_context", default={})
@@ -36,11 +102,13 @@ class Event:
                 f"metadata={self.metadata} context={self.context} cancelled={self.cancelled}>")
 
 
+if __name__ == '__main__':
 # Example hook function
-def sample_hook(event):
-    # Access unified context
-    print("Before hook, context:", event.context)
-    # Update the context
-    event.context["hook_executed"] = True
-    print("After hook, context:", event.context)
-    return "hook_result"
+    def sample_hook(event):
+        # Access unified context
+        print("Before hook, context:", event.context)
+        # Update the context
+        event.context["hook_executed"] = True
+        print("After hook, context:", event.context)
+        return "hook_result"
+
