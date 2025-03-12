@@ -13,6 +13,8 @@ from runecaller.events.enhancements import (
     init_persistence_db
 )
 
+from bedrocked.reporting.reported import logger
+
 # Initialize persistent storage.
 init_persistence_db()
 
@@ -25,13 +27,13 @@ add_middleware(add_custom_metadata)
 
 # Lifecycle hooks
 def before_hook(event):
-    print(f"[Before] About to dispatch: {event.name}")
+    logger.info(f"[Before] About to dispatch: {event.name}")
 
 def after_hook(event, elapsed):
-    print(f"[After] Dispatched {event.name} in {elapsed:.4f} seconds.")
+    logger.info(f"[After] Dispatched {event.name} in {elapsed:.4f} seconds.")
 
 def error_hook(event, error):
-    print(f"[Error] Error while dispatching {event.name}: {error}")
+    logger.error(f"Error while dispatching {event.name}: {error}")
 
 register_before_dispatch(before_hook)
 register_after_dispatch(after_hook)
@@ -40,14 +42,14 @@ register_on_error(error_hook)
 # Listener with role requirement and predicate filtering.
 @requires_role("admin")
 def admin_listener(event):
-    print(f"Admin listener received: {event}")
+    logger.info(f"Admin listener received: {event}")
 
 def predicate_filter(event):
     # Only process events with payload containing 'process': True.
     return event.payload.get("process", False)
 
 def filtered_listener(event):
-    print(f"Filtered listener processed event: {event.name}")
+    logger.debug(f"Filtered listener processed event: {event.name}")
 
 # Register listeners.
 register_listener("app.start", admin_listener, priority=5)
@@ -55,7 +57,7 @@ register_listener("app.start", filtered_listener, priority=10, predicate=predica
 
 # Schedule an event to be dispatched after a 2-second delay.
 async def main():
-    print("Scheduling event 'app.start' with delayed dispatch...")
+    logger.info("Scheduling event 'app.start' with delayed dispatch...")
     await schedule_event(dispatch, 2, "app.start", {"user": "Alice", "process": True}, mode="sync")
     # Dispatch another event immediately.
     dispatch("app.start", {"user": "Bob", "process": False}, mode="sync")
@@ -83,7 +85,7 @@ manager.load_hooks_from_config(sample_config)
 
 # Now, execute hooks for "app.pre_process"
 results = execute_hooks("app.pre_process", "sample_arg", key="sample_value")
-print("Hook results:", results)
+logger.info("Hook results:", results)
 
 
 
