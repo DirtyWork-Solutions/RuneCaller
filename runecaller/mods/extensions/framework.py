@@ -1,4 +1,5 @@
 from typing import Any, Dict, List
+from bedrocked.reporting.reported import logger
 
 
 class Extension:
@@ -19,7 +20,7 @@ class Extension:
         Register the extension.
         This method can be overridden to perform setup tasks.
         """
-        print(f"Registering extension {self.name} (v{self.version})")
+        logger.info(f"Registering extension {self.name} (v{self.version})")
         # Dependency injection stub: load required dependencies.
         self.inject_dependencies()
 
@@ -28,18 +29,18 @@ class Extension:
         Stub for dependency injection. Validate that dependencies are met.
         """
         if self.dependencies:
-            print(f"Injecting dependencies for {self.name}: {self.dependencies}")
-        # Here you could integrate with a dependency resolver.
+            logger.info(f"Injecting dependencies for {self.name}: {self.dependencies}")
+        # TODO: integrate with a dependency resolver.
 
     def activate(self):
         """Activate the extension."""
         self.active = True
-        print(f"Activating extension {self.name}")
+        logger.info(f"Activating extension {self.name}")
 
     def deactivate(self):
         """Deactivate the extension."""
         self.active = False
-        print(f"Deactivating extension {self.name}")
+        logger.info(f"Deactivating extension {self.name}")
 
     def execute(self, *args, **kwargs):
         """

@@ -7,6 +7,7 @@ if sys.hexversion >= 0x3000000:
 else:
     im_func = 'im_func'
     im_self = 'im_self'
+
 def safeRef(target, onDelete = None):
     """Return a *safe* weak reference to a callable target
 

@@ -1,9 +1,8 @@
 import asyncio
 import time
-import logging
 from typing import Any, Callable, Dict, List, Tuple, Union
 from runecaller.events.event import Event, current_event_context
-from .schema import EventSchema
+from runecaller.events.schema import EventSchema
 from runecaller.events.enhancements import (
     global_load_monitor,
     global_circuit_breaker,
@@ -11,7 +10,7 @@ from runecaller.events.enhancements import (
     alert_event
 )
 
-logger = logging.getLogger(__name__)
+from bedrocked.reporting.reported import logger
 
 # Middleware: functions that modify or log events before dispatch.
 middleware: List[Callable[[Event], Event]] = []

@@ -1,12 +1,12 @@
 from typing import Callable
-
+from bedrocked.reporting.reported import logger
 from runecaller.__bases__ import BaseHook
 
 
 # Example default hook
 class DefaultPreHook(BaseHook):
     def execute(self, *args, **kwargs):
-        print("[DefaultPreHook] Pre-hook executed with:", args, kwargs)
+        logger.debug("[DefaultPreHook] Pre-hook executed with:", args, kwargs)
         return args, kwargs
 
 

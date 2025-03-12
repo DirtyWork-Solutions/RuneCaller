@@ -1,6 +1,5 @@
 import asyncio
 import time
-import logging
 import sqlite3
 import os
 import json
@@ -8,7 +7,7 @@ from functools import wraps
 from typing import Callable, Any, List, Generator
 import contextvars
 
-logger = logging.getLogger(__name__)
+from bedrocked.reporting.reported import logger
 
 # -------------------------------
 # Lifecycle Hooks & Callbacks

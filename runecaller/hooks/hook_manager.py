@@ -1,11 +1,10 @@
 import asyncio
-import logging
 import time
 from typing import Callable, Dict, Any, List, Optional
 
 from runecaller.__bases__ import BaseHook
 
-logger = logging.getLogger(__name__)
+from bedrocked.reporting.reported import logger
 
 class Hook(BaseHook):
     def __init__(

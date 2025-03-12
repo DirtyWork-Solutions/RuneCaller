@@ -1,4 +1,5 @@
 from runecaller.events.dispatch import register_listener, unregister_listener
+from bedrocked.reporting.reported import logger
 
 def subscribe(event_pattern: str, listener, priority: int = 10):
     """Alias to register a listener to an event with an optional priority."""

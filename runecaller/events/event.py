@@ -2,6 +2,8 @@ import datetime
 import uuid
 from typing import Any, Dict, Optional, List
 import contextvars
+from bedrocked.reporting.reported import logger
+
 
 EVENT_GROUPS = {
     "auth_events": ["user_login", "user_logout", "password_reset"],

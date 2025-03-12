@@ -1,3 +1,6 @@
+from bedrocked.reporting.reported import logger
+
+
 """Error types for dispatcher mechanism
 """
 

@@ -1,6 +1,5 @@
-import logging
+from bedrocked.reporting.reported import logger
 
-logger = logging.getLogger(__name__)
 
 def log_event(event):
     """Observer that logs event details, including cancellation status."""

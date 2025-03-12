@@ -1,7 +1,6 @@
-import logging
 from datetime import datetime
 
-logger = logging.getLogger(__name__)
+from bedrocked.reporting.reported import logger
 
 def audit_event(extension_name: str, event_type: str, details: dict):
     """

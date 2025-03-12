@@ -1,8 +1,7 @@
 import asyncio
-import logging
 import time
+from bedrocked.reporting.reported import logger
 
-logger = logging.getLogger(__name__)
 
 # Global middleware for hooks
 _hook_middleware = []
@@ -75,8 +74,6 @@ executor = concurrent.futures.ThreadPoolExecutor(max_workers=10)
 def execute_hook_isolated(hook, *args, **kwargs):
     return executor.submit(hook.execute, *args, **kwargs)
 
-import logging
-logger = logging.getLogger("hook_audit")
 
 def audit_hook_execution(hook_name, inputs, outputs, exec_time):
     logger.info(f"Hook {hook_name} executed in {exec_time:.4f}s; inputs: {inputs}, outputs: {outputs}")

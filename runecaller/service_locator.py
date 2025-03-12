@@ -1,4 +1,4 @@
-# pyextend/core/service_locator.py
+from bedrocked.reporting.reported import logger
 
 class ServiceLocator:
     _services = {}
@@ -22,3 +22,7 @@ class ServiceLocator:
 # Example usage:
 # ServiceLocator.register("event_system", my_event_system_instance)
 # event_system = ServiceLocator.get("event_system")
+if __name__ == '__main__':
+    ServiceLocator.register("logs", logger)
+    logs = ServiceLocator.get("logs")
+    logs.success("Boo")

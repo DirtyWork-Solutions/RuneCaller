@@ -1,6 +1,7 @@
 import os
 import importlib
 from typing import List
+from bedrocked.reporting.reported import logger
 
 def discover_plugins(plugin_directory: str) -> List[str]:
     """
@@ -11,7 +12,10 @@ def discover_plugins(plugin_directory: str) -> List[str]:
     for file in os.listdir(plugin_directory):
         if file.endswith('.py') and file != '__init__.py':
             module_name = file[:-3]
+            logger.info(f"Discovered plugin: {module_name}")
             plugins.append(module_name)
+
+    logger.debug(f"Discovered {len(plugins)} in total.")
     return plugins
 
 def load_plugin(plugin_directory: str, plugin_name: str):
@@ -23,5 +27,5 @@ def load_plugin(plugin_directory: str, plugin_name: str):
         module = importlib.import_module(module_path)
         return module
     except ImportError as e:
-        print(f"Error loading plugin {plugin_name}: {e}")
+        logger.error(f"Error loading plugin {plugin_name}: {e}")
         return None

@@ -1,6 +1,5 @@
-import logging
+from bedrocked.reporting.reported import logger
 
-logger = logging.getLogger(__name__)
 
 
 class PolicyEngine:

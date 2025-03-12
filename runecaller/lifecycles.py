@@ -1,7 +1,4 @@
-# pyextend/core/lifecycle_manager.py
-import logging
-
-logger = logging.getLogger(__name__)
+from bedrocked.reporting.reported import logger
 
 class LifecycleManager:
     def __init__(self):

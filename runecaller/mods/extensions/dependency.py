@@ -1,7 +1,5 @@
 import networkx as nx
-import logging
-
-logger = logging.getLogger(__name__)
+from bedrocked.reporting.reported import logger
 
 
 class DependencyResolver:

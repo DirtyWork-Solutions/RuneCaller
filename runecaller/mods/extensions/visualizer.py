@@ -1,5 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+from bedrocked.reporting.reported import logger
+
 
 def visualize_dependency_graph(graph):
     """

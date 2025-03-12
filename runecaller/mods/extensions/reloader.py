@@ -1,7 +1,6 @@
 import importlib
-import logging
+from bedrocked.reporting.reported import logger
 
-logger = logging.getLogger(__name__)
 
 def reload_extension(extension_module):
     """
@@ -10,7 +9,7 @@ def reload_extension(extension_module):
     """
     try:
         new_module = importlib.reload(extension_module)
-        logger.info(f"Extension {extension_module.__name__} reloaded successfully.")
+        logger.success(f"Extension '{extension_module.__name__}' reloaded successfully.")
         return new_module
     except Exception as e:
         logger.exception(f"Failed to reload extension {extension_module.__name__}: {e}")
