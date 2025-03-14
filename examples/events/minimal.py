@@ -1,4 +1,4 @@
-from runecaller.events import dispatcher
+from runecaller._old.events import dispatcher
 
 metaKey = "moo"
 MyNode = object()

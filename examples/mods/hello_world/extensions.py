@@ -1,11 +1,10 @@
 # pyextend/modifications/extensions/my_extension.py
 
-from runecaller.mods.extensions.framework import Extension
-from runecaller.events.dispatch import dispatch
-from runecaller.hooks.hook_register import register_hook
-from runecaller.hooks.hook_executor import execute_hooks
-from runecaller.service_locator import ServiceLocator
-from runecaller.lifecycles import LifecycleManager
+from runecaller._old.mods.extensions.framework import Extension
+from runecaller._old.events import dispatch
+from runecaller._old.hooks import register_hook
+from runecaller._old.hooks import execute_hooks
+from runecaller._old.service_locator import ServiceLocator
 
 
 class MyExtension(Extension):
@@ -57,7 +56,7 @@ class MyExtension(Extension):
 # For standalone testing:
 if __name__ == "__main__":
     # Register the lifecycle manager in the service locator.
-    from runecaller.lifecycles import LifecycleManager
+    from runecaller._old.lifecycles import LifecycleManager
 
     lifecycle_manager = LifecycleManager()
     ServiceLocator.register("lifecycle_manager", lifecycle_manager)

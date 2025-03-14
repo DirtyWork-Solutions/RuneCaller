@@ -1,7 +1,7 @@
 from typing import Dict
-from runecaller.mods.extensions.policy import PolicyEngine
-from runecaller.mods.extensions.dependency import DependencyResolver
-from runecaller.mods.extensions.auditing import audit_event
+from runecaller._old.mods.extensions.policy import PolicyEngine
+from runecaller._old.mods.extensions.dependency import DependencyResolver
+from runecaller._old.mods.extensions.auditing import audit_event
 from bedrocked.reporting.reported import logger
 
 # A registry for loaded plugins

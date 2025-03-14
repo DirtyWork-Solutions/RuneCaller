@@ -1,7 +1,7 @@
-from runecaller.mods.extensions.framework import Extension
-from runecaller.events.dispatch import dispatch
-from runecaller.events.subscribe import subscribe, unsubscribe
-from runecaller.events.observe import log_event
+from runecaller._old.mods.extensions.framework import Extension
+from runecaller._old.events import dispatch
+from runecaller._old.events import subscribe, unsubscribe
+
 
 class TestPlugin(Extension):
     def __init__(self):

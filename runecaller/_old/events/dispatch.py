@@ -1,12 +1,11 @@
 import asyncio
 import time
 from typing import Any, Callable, Dict, List, Tuple, Union
-from runecaller.events.event import Event, current_event_context
-from runecaller.events.schema import EventSchema
-from runecaller.events.enhancements import (
+from runecaller._old.events.event import Event, current_event_context
+from runecaller._old.events.schema import EventSchema
+from runecaller._old.events.enhancements import (
     global_load_monitor,
     global_circuit_breaker,
-    global_logging_config,
     alert_event
 )
 

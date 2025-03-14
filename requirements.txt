@@ -2,4 +2,4 @@ pip~=23.2.1
 setuptools~=75.8.2
 wheel~=0.45.1
 pyforged~=0.2.2
-bedrocked~=0.1.2
+bedrocked~=0.1.4

@@ -1,10 +1,6 @@
-from runecaller.events.dispatch import dispatch, add_middleware
-from runecaller.events.subscribe import subscribe
-from runecaller.events.observe import log_event
 import asyncio
-from runecaller.events.dispatch import dispatch, add_middleware, register_listener
-from runecaller.events.event import Event
-from runecaller.events.enhancements import (
+from runecaller._old.events import dispatch, add_middleware, register_listener
+from runecaller._old.events import (
     register_before_dispatch,
     register_after_dispatch,
     register_on_error,
@@ -61,8 +57,8 @@ async def main():
     dispatch("app.start", {"user": "Bob", "process": False}, mode="sync")
 
 
-from runecaller.hooks.hook_manager import HookManager
-from runecaller.hooks.hook_executor import execute_hooks
+from runecaller._old.hooks import HookManager
+from runecaller._old.hooks import execute_hooks
 
 # Assume we have a configuration file (hooks.yaml) with hook definitions.
 # For this demo, we use a sample dictionary.
