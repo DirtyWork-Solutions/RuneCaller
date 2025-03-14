@@ -60,7 +60,9 @@ class HookManager:
     def load_hooks_from_config(self, config: dict):
         """
         Load hook definitions from a configuration dictionary.
-        Expected format:
+
+        **Expected format:**
+
         {
           "hook_point": [
               {

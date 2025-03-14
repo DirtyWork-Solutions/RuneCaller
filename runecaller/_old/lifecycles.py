@@ -19,7 +19,7 @@ class LifecycleManager:
         for component in self.components:
             try:
                 component.start()
-                logger.info(f"Started: {component.__class__.__name__}")
+                logger.success(f"Started: {component.__class__.__name__}")
             except Exception as e:
                 logger.exception(f"Failed to start {component.__class__.__name__}: {e}")
 
@@ -31,7 +31,7 @@ class LifecycleManager:
         for component in self.components:
             try:
                 component.shutdown()
-                logger.info(f"Shutdown: {component.__class__.__name__}")
+                logger.success(f"Shutdown: {component.__class__.__name__}")
             except Exception as e:
                 logger.exception(f"Failed to shutdown {component.__class__.__name__}: {e}")
 
@@ -40,12 +40,14 @@ if __name__ == '__main__':
     # Example component interface:
     class ComponentInterface:
         def start(self):
-            raise NotImplementedError
+            logger.debug("started component")
+            logger.error("Not implemented yet")
 
         def shutdown(self):
-            raise NotImplementedError
+            logger.warning("Not implemented yet.")
 
     test = ComponentInterface()
     manager = LifecycleManager()
     manager.register_component(test)
     manager.start()
+    manager.shutdown()

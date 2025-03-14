@@ -25,7 +25,7 @@ def execute_hooks(name: str, *args, mode: str = 'sync', **kwargs):
       - Lifecycle callbacks
       - Execution modes: sync, async, deferred
     """
-    from .hook_register import get_registered_hooks
+    from runecaller.hooks.hook_register import get_registered_hooks
     hooks = get_registered_hooks(name)
 
     # Apply middleware to the arguments

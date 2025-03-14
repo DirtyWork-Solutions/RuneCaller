@@ -8,3 +8,4 @@ def log_event(event):
 def debug_event(event):
     """Detailed debug logging for events."""
     logger.debug(f"Event debug: {event}")
+
