@@ -1,6 +1,5 @@
-#! /usr/bin/env python
 from __future__ import print_function
-from from runecaller.events import dispatcher
+from runecaller.events import dispatcher
 
 SIGNAL = 'my-first-signal'
 

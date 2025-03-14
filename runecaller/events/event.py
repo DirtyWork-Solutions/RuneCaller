@@ -112,5 +112,9 @@ if __name__ == '__main__':
         # Update the context
         event.context["hook_executed"] = True
         print("After hook, context:", event.context)
+
         return "hook_result"
 
+    event = Event("app.reboot.scheduled")
+    boo = sample_hook(event)
+    print(event)

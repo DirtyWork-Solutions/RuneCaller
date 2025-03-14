@@ -71,7 +71,7 @@ from runecaller.hooks.hook_executor import execute_hooks
 sample_config = {
     "app.pre_process": [
         {
-            "module": "runecaller.hooks.core_hooks",
+            "module": "runecaller.hooks.native_hooks",
             "class": "DefaultPreHook",
             "priority": 5,
             "enabled": True,
@@ -91,4 +91,6 @@ logger.info("Hook results:", results)
 
 if __name__ == '__main__':
     # Run the example.
+    print(results)
     asyncio.run(main())
+    print(results)
