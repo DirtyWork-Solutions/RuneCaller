@@ -1,30 +1,21 @@
-"""Multiple-producer-multiple-consumer signal-dispatching
-
-dispatcher is the core of the PyDispatcher system,
-providing the primary API and the core logic for the
-system.
+"""Providing the primary API and the core logic for the event system.
 
 Module attributes of note:
 
-    Any -- Singleton used to signal either "Any Sender" or
-        "Any Signal".  See documentation of the _Any class.
-    Anonymous -- Singleton used to signal "Anonymous Sender"
-        See documentation of the _Anonymous class.
+    Any -- Singleton used to signal either "Any Sender" or "Any Signal".  See documentation of the _Any class.
+    Anonymous -- Singleton used to signal "Anonymous Sender".  See documentation of the _Anonymous class.
 
 Internal attributes:
     WEAKREF_TYPES -- tuple of types/classes which represent
-        weak references to receivers, and thus must be de-
-        referenced on retrieval to retrieve the callable
-        object
+        weak references to receivers, and thus must be de-referenced on retrieval to retrieve the callable object
     connections -- { senderkey (id) : { signal : [receivers...]}}
     senders -- { senderkey (id) : weakref(sender) }
-        used for cleaning up sender references on sender
-        deletion
+        used for cleaning up sender references on sender deletion
     sendersBack -- { receiverkey (id) : [senderkey (id)...] }
-        used for cleaning up receiver references on receiver
-        deletion, (considerably speeds up the cleanup process
+        used for cleaning up receiver references on receiver deletion, (considerably speeds up the cleanup process
         vs. the original code.)
 """
+
 import weakref
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 

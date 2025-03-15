@@ -1,4 +1,5 @@
 from bedrocked.reporting.reported import logger
+from pyforged.engine.services import ServiceRegistry
 
 class ServiceLocator:
     _services = {}
