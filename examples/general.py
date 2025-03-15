@@ -1,9 +1,6 @@
-from runecaller.events.dispatch import dispatch, add_middleware
 from runecaller.events.subscribe import subscribe
-from runecaller.events.observe import log_event
 import asyncio
 from runecaller.events.dispatch import dispatch, add_middleware, register_listener
-from runecaller.events.event import Event
 from runecaller.events.enhancements import (
     register_before_dispatch,
     register_after_dispatch,
@@ -62,7 +59,7 @@ async def main():
 
 
 from runecaller.hooks.hook_manager import HookManager
-from runecaller.hooks.hook_executor import execute_hooks
+from runecaller._old.hooks.hook_executor import execute_hooks
 
 # Assume we have a configuration file (hooks.yaml) with hook definitions.
 # For this demo, we use a sample dictionary.

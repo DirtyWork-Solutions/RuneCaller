@@ -3,9 +3,8 @@
 from runecaller.mods.extensions.framework import Extension
 from runecaller.events.dispatch import dispatch
 from runecaller.hooks.hook_register import register_hook
-from runecaller.hooks.hook_executor import execute_hooks
+from runecaller._old.hooks.hook_executor import execute_hooks
 from runecaller.service_locator import ServiceLocator
-from runecaller.lifecycles import LifecycleManager
 
 
 class MyExtension(Extension):
