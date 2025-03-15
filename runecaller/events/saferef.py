@@ -1,5 +1,6 @@
 """Refactored "safe reference" from dispatcher.py"""
 import weakref, traceback, sys
+from filecmp import cmp
 
 if sys.hexversion >= 0x3000000:
     im_func = '__func__'
