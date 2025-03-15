@@ -1,6 +1,8 @@
 """Refactored "safe reference" from dispatcher.py"""
+
 import weakref
 import traceback
+import asyncio
 from typing import Callable, Optional, Union
 
 im_func = '__func__'
@@ -115,7 +117,10 @@ class BoundMethodWeakref:
             for function in methods:
                 try:
                     if hasattr(function, '__call__'):
-                        function(self)
+                        if asyncio.iscoroutinefunction(function):
+                            asyncio.create_task(function(self))
+                        else:
+                            function(self)
                 except Exception as e:
                     try:
                         traceback.print_exc()

@@ -15,8 +15,10 @@ Internal attributes:
         used for cleaning up receiver references on receiver deletion, (considerably speeds up the cleanup process
         vs. the original code.)
 """
-
+import asyncio
 import weakref
+from queue import Queue
+from threading import Thread
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 from runecaller.events import robustapply
@@ -57,30 +59,50 @@ def getAllReceivers(sender: Any = Any, signal: Any = Any) -> Callable:
                 except TypeError:
                     pass
 
-def send(signal: Any = Any, sender: Any = None, *arguments, **named) -> List[Tuple[Callable, Any]]:
+async def send(signal: Any = Any, sender: Any = None, *arguments, **named) -> List[Tuple[Callable, Any]]:
     responses = []
     for receiver in liveReceivers(getAllReceivers(sender, signal)):
-        response = robustapply.robustApply(
-            receiver,
-            signal=signal,
-            sender=sender,
-            *arguments,
-            **named
-        )
+        if asyncio.iscoroutinefunction(receiver):
+            response = await receiver(signal=signal, sender=sender, *arguments, **named)
+        else:
+            response = robustapply.robustApply(receiver, signal=signal, sender=sender, *arguments, **named)
         responses.append((receiver, response))
     return responses
 
-def sendExact(signal: Any = Any, sender: Any = None, *arguments, **named) -> List[Tuple[Callable, Any]]:
+async def async_send(signal: Any = Any, sender: Any = None, *arguments, **named) -> List[Tuple[Callable, Any]]:
     responses = []
-    for receiver in liveReceivers(getReceivers(sender, signal)):
-        response = robustapply.robustApply(
-            receiver,
-            signal=signal,
-            sender=sender,
-            *arguments,
-            **named
-        )
+    queue = asyncio.Queue()
+    for receiver in liveReceivers(getAllReceivers(sender, signal)):
+        await queue.put(receiver)
+
+    while not queue.empty():
+        receiver = await queue.get()
+        if asyncio.iscoroutinefunction(receiver):
+            response = await receiver(signal=signal, sender=sender, *arguments, **named)
+        else:
+            response = robustapply.robustApply(receiver, signal=signal, sender=sender, *arguments, **named)
         responses.append((receiver, response))
+    return responses
+
+def threaded_send(signal: Any = Any, sender: Any = None, *arguments, **named) -> List[Tuple[Callable, Any]]:
+    responses = []
+    queue = Queue()
+    for receiver in liveReceivers(getAllReceivers(sender, signal)):
+        queue.put(receiver)
+
+    def worker():
+        while not queue.empty():
+            receiver = queue.get()
+            response = robustapply.robustApply(receiver, signal=signal, sender=sender, *arguments, **named)
+            responses.append((receiver, response))
+            queue.task_done()
+
+    threads = [Thread(target=worker) for _ in range(4)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+
     return responses
 
 def _removeReceiver(receiver: Callable) -> bool:

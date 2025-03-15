@@ -1,9 +1,11 @@
 """Module implementing error-catching version of send (sendRobust)"""
+
+import asyncio
 from typing import Any, Callable, List, Tuple, Union
 from runecaller.events.dispatcher import liveReceivers, getAllReceivers
 from runecaller.events.robustapply import robustApply
 
-def sendRobust(
+async def sendRobust(
     signal: Any = Any,
     sender: Any = None,
     *arguments: Any, **named: Any
@@ -39,13 +41,22 @@ def sendRobust(
     responses = []
     for receiver in liveReceivers(getAllReceivers(sender, signal)):
         try:
-            response = robustApply(
-                receiver,
-                signal=signal,
-                sender=sender,
-                *arguments,
-                **named
-            )
+            if asyncio.iscoroutinefunction(receiver):
+                response = await robustApply(
+                    receiver,
+                    signal=signal,
+                    sender=sender,
+                    *arguments,
+                    **named
+                )
+            else:
+                response = robustApply(
+                    receiver,
+                    signal=signal,
+                    sender=sender,
+                    *arguments,
+                    **named
+                )
         except Exception as err:
             responses.append((receiver, err))
         else:
