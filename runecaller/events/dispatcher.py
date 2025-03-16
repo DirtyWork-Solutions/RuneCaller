@@ -304,7 +304,7 @@ def _killBackref(receiver: Callable, senderkey: int) -> bool:
         senderkey (int): The key of the sender.
 
     Returns:
-        bool: True if the back reference was killed, False otherwise.
+        **bool**  | is *True* - if the back reference was killed, *False* otherwise.
     """
     receiverkey = id(receiver)
     set = sendersBack.get(receiverkey, set())
