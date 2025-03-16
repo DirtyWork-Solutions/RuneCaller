@@ -24,6 +24,12 @@ from threading import Thread
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 from runecaller.events import robustapply
+from runecaller.events.middleware import MiddlewareManager
+from runecaller.events.filters import EventFilter, EventFilterManager
+
+middleware_manager = MiddlewareManager()
+filter_manager = EventFilterManager()
+
 
 connections: Dict[int, Dict[Any, List[Callable]]] = {}
 sendersBack: Dict[int, set] = {}
@@ -98,6 +104,9 @@ async def send(signal: Any = Any, sender: Any = None, *arguments, **named) -> Li
         List[Tuple[Callable, Any]]: A list of tuples containing the receiver and its response.
     """
     responses = []
+    if not filter_manager.apply_filters(signal, sender, **named):
+        return responses
+    signal, sender, named = middleware_manager.process(signal, sender, **named)
     for receiver in liveReceivers(getAllReceivers(sender, signal)):
         if asyncio.iscoroutinefunction(receiver):
             response = await receiver(signal=signal, sender=sender, *arguments, **named)
