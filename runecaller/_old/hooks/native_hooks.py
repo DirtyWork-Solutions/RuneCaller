@@ -1,6 +1,6 @@
 from typing import Callable
 from bedrocked.reporting.reported import logger
-from runecaller.__bases__ import BaseHook
+from runecaller._old.__bases__ import BaseHook
 
 
 # Example default hook
@@ -47,4 +47,3 @@ def conditionally_enabled(condition: Callable[[], bool]):
 
 
 
-#######

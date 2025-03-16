@@ -9,3 +9,6 @@ class BaseHook(ABC):
     def execute(self, *args, **kwargs):
         """Implement hook logic here."""
         pass
+
+class BaseService(ABC):
+    pass

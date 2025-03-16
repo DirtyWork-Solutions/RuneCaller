@@ -2,7 +2,7 @@ import asyncio
 import time
 from typing import Callable, Dict, Any, List, Optional
 
-from runecaller.__bases__ import BaseHook
+from runecaller._old.__bases__ import BaseHook
 
 from bedrocked.reporting.reported import logger
 
@@ -60,7 +60,9 @@ class HookManager:
     def load_hooks_from_config(self, config: dict):
         """
         Load hook definitions from a configuration dictionary.
-        Expected format:
+
+        **Expected format:**
+
         {
           "hook_point": [
               {
