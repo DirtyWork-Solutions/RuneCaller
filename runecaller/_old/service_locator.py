@@ -1,4 +1,5 @@
 from bedrocked.reporting.reported import logger
+from pyforged.engine.services import ServiceRegistry
 
 from runecaller.events.event import Event
 from runecaller.events.dispatch import dispatch
