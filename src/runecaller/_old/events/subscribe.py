@@ -1,4 +1,4 @@
-from runecaller._old.events.dispatch import register_listener, unregister_listener
+from src.runecaller._old.events.dispatch import register_listener, unregister_listener
 
 
 def subscribe(event_pattern: str, listener, priority: int = 10):

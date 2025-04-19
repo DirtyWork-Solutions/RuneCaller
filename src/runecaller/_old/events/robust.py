@@ -2,8 +2,8 @@
 
 import asyncio
 from typing import Any, Callable, List, Tuple, Union
-from runecaller.events.dispatcher import liveReceivers, getAllReceivers
-from runecaller.events.robustapply import robustApply
+from src.runecaller.events.dispatcher import liveReceivers, getAllReceivers
+from src.runecaller import robustApply
 
 async def sendRobust(
     signal: Any = Any,

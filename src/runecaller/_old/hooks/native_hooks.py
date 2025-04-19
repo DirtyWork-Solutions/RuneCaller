@@ -1,6 +1,6 @@
 from typing import Callable
 from bedrocked.reporting.reported import logger
-from runecaller._old.__bases__ import BaseHook
+from src.runecaller._old.__bases__ import BaseHook
 
 
 # Example default hook

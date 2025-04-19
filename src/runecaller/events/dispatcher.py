@@ -21,11 +21,11 @@ import asyncio
 import weakref
 from queue import Queue
 from threading import Thread
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any, Callable, Dict, List, Tuple, Union
 
-from runecaller.events import robustapply
-from runecaller.events.middleware import MiddlewareManager
-from runecaller.events.filters import EventFilter, EventFilterManager
+from src.runecaller import robustapply
+from src.runecaller import MiddlewareManager
+from src.runecaller import EventFilterManager
 
 middleware_manager = MiddlewareManager()
 filter_manager = EventFilterManager()

@@ -2,7 +2,7 @@ import asyncio
 import time
 from typing import Callable, Dict, Any, List, Optional
 
-from runecaller._old.__bases__ import BaseHook
+from src.runecaller._old.__bases__ import BaseHook
 
 from bedrocked.reporting.reported import logger
 

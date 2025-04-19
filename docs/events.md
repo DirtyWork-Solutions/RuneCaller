@@ -26,8 +26,9 @@ Here you go. . .
 You can send signals to all connected receivers using the send, async_send, or threaded_send functions.
 
 *Example:*
+
 ```python
-from runecaller.events.dispatcher import send
+from src.runecaller import send
 
 # Send a signal
 responses = send(signal="my_signal", sender="my_sender", arg1="value1", arg2="value2")
@@ -39,14 +40,17 @@ responses = send(signal="my_signal", sender="my_sender", arg1="value1", arg2="va
 Receivers are functions or methods that are connected to signals. They are called when a signal is sent.
 
 *Example:*
+
 ```python
-    from runecaller.events.dispatcher import connect
-    
-    def my_receiver(signal, sender, **kwargs):
-        print(f"Received signal: {signal} from sender: {sender} with kwargs: {kwargs}")
-    
-    # Connect the receiver to a signal
-    connect(receiver=my_receiver, signal="my_signal", sender="my_sender")
+    from src.runecaller import connect
+
+
+def my_receiver(signal, sender, **kwargs):
+    print(f"Received signal: {signal} from sender: {sender} with kwargs: {kwargs}")
+
+
+# Connect the receiver to a signal
+connect(receiver=my_receiver, signal="my_signal", sender="my_sender")
 ```
 
 ### Error Handling
@@ -56,15 +60,18 @@ The **events** package includes robust error handling mechanisms. If a receiver 
 You can add middleware to process signals before they are sent to receivers.
 
 *Example:*
+
 ```python
-    from runecaller.events.dispatcher import add_middleware
-    
-    def my_middleware(signal, sender, **kwargs):
-        print(f"Middleware processing signal: {signal}")
-        return signal, sender, kwargs
-    
-    # Add middleware
-    add_middleware(my_middleware)
+    from src.runecaller import add_middleware
+
+
+def my_middleware(signal, sender, **kwargs):
+    print(f"Middleware processing signal: {signal}")
+    return signal, sender, kwargs
+
+
+# Add middleware
+add_middleware(my_middleware)
 ```
 
 ## API Reference
